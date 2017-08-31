@@ -117,12 +117,7 @@ namespace CPE200Lab1
                     isAfterOperater = true;
                     break;
                 case "%":
-                /// your code here
-                case "√":
-                    firstOperand = lblDisplay.Text;
-                    string result= engine.Calculate(operate, firstOperand, null);
-                    lblDisplay.Text = Convert.ToString(result);
-                    isAfterOperater = true;
+                    /// your code here
                     break;
             }
             isAllowBack = false;
@@ -255,6 +250,15 @@ namespace CPE200Lab1
             
             remainlengt = maxout - part[0].Length - 1;
             lblDisplay.Text =result.ToString("N"+remainlengt) ;
+        }
+
+        private void btnsquare_Click(object sender, EventArgs e)
+        {
+            double num;
+            firstOperand = lblDisplay.Text;
+            num = Convert.ToDouble(firstOperand);
+            double result = Math.Sqrt(num);
+            lblDisplay.Text = Convert.ToString(result);
         }
     }
 }
