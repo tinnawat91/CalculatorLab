@@ -19,6 +19,7 @@ namespace CPE200Lab1
         private bool isTwotime;
         private string firstOperand;
         private string operate;
+        private string operate2;
         private CalculatorEngine engine;
 
         private void resetAll()
@@ -81,9 +82,26 @@ namespace CPE200Lab1
             {
                 string secondOperand = lblDisplay.Text;
                 string result = engine.Calculate(operate, firstOperand, secondOperand);
-                firstOperand = result;
+                if (((Button)sender).Text == "%")
+                {
+                    operate2 = ((Button)sender).Text;
+                }
+                else
+                {
+                    operate = ((Button)sender).Text;
+                }
+                if (operate2 == "%")
+                {
+                    secondOperand = engine.Calculate(operate2, firstOperand, secondOperand);
+                    result = engine.Calculate(operate, firstOperand, secondOperand);
+                    lblDisplay.Text = secondOperand;
+                }
+                if (operate2 != "%")
+                {
+                    firstOperand = result;
+                }
                 lblDisplay.Text = result;
-                operate = ((Button)sender).Text;
+                
                 isAfterOperater = true;
                 return;
             }
@@ -98,9 +116,7 @@ namespace CPE200Lab1
                     isAfterOperater = true;
                     break;
                 case "%":
-                    /*string secondOperand = lblDisplay.Text;
-                   secondOperand = engine.Calculate(operate, firstOperand, secondOperand);
-                    lblDisplay.Text = secondOperand;*/// your code here
+                    /// your code here
                     break;
             }
             isAllowBack = false;
