@@ -48,14 +48,11 @@ namespace CPE200Lab1
             {
                 resetAll();
             }
-            if (isAfterOperater)
+            if (isAfterOperater&&isTwotime)
             {
                 lblDisplay.Text = "0";
             }
-            if (isTwotime)
-            {
-                lblDisplay.Text = "0";
-            }
+            
             if(lblDisplay.Text.Length is 8)
             {
                 return;
@@ -87,6 +84,7 @@ namespace CPE200Lab1
                 firstOperand = result;
                 lblDisplay.Text = result;
                 operate = ((Button)sender).Text;
+                isAfterOperater = true;
                 return;
             }
             operate = ((Button)sender).Text;
@@ -100,7 +98,9 @@ namespace CPE200Lab1
                     isAfterOperater = true;
                     break;
                 case "%":
-                    // your code here
+                    /*string secondOperand = lblDisplay.Text;
+                   secondOperand = engine.Calculate(operate, firstOperand, secondOperand);
+                    lblDisplay.Text = secondOperand;*/// your code here
                     break;
             }
             isAllowBack = false;
