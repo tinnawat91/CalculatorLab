@@ -44,9 +44,19 @@ namespace CPE200Lab1
                 case "%":
                     return (Convert.ToDouble(secondOperand) * Convert.ToDouble(firstOperand) / 100).ToString();//your code here
                     break;
+                case "√":
+                    return Convert.ToString(sqrt(Convert.ToDouble(firstOperand)));
+                    break;
+                
             }
             return "E";
         }
 
+        private object sqrt(double v) => throw new NotImplementedException();
+
+        internal string Calculate(string operate, string firstOperand, object secondOperand)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

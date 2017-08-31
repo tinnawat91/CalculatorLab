@@ -81,7 +81,7 @@ namespace CPE200Lab1
             if (isTwotime)
             {
                 string secondOperand = lblDisplay.Text;
-                string result = engine.Calculate(operate, firstOperand, secondOperand);
+                string result = engine.Calculate(operate, firstOperand, lblDisplay.Text);
                 if (((Button)sender).Text == "%")
                 {
                     operate2 = ((Button)sender).Text;
@@ -92,9 +92,9 @@ namespace CPE200Lab1
                 }
                 if (operate2 == "%")
                 {
-                    secondOperand = engine.Calculate(operate2, firstOperand, secondOperand);
-                    result = engine.Calculate(operate, firstOperand, secondOperand);
-                    lblDisplay.Text = secondOperand;
+                    secondOperand = engine.Calculate(operate2, firstOperand, lblDisplay.Text);
+                    result = engine.Calculate(operate, firstOperand, lblDisplay.Text);
+                    lblDisplay.Text = lblDisplay.Text;
                 }
                 if (operate2 != "%")
                 {
@@ -106,6 +106,7 @@ namespace CPE200Lab1
                 return;
             }
             operate = ((Button)sender).Text;
+            
             switch (operate)
             {
                 case "+":
@@ -116,11 +117,21 @@ namespace CPE200Lab1
                     isAfterOperater = true;
                     break;
                 case "%":
-                    /// your code here
+                /// your code here
+                case "√":
+                    firstOperand = lblDisplay.Text;
+                    string result= engine.Calculate(operate, firstOperand, null);
+                    lblDisplay.Text = Convert.ToString(result);
+                    isAfterOperater = true;
                     break;
             }
             isAllowBack = false;
             isTwotime = true;
+        }
+
+        private string Sqrt(string firstOperand)
+        {
+            throw new NotImplementedException();
         }
 
         private void btnEqual_Click(object sender, EventArgs e)
@@ -221,6 +232,25 @@ namespace CPE200Lab1
                     lblDisplay.Text = "0";
                 }
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDisplay_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn1divideX_Click(object sender, EventArgs e)
+        {
+            
+            int remainlengt=6;
+            firstOperand = lblDisplay.Text;
+            double result = (1 / (Convert.ToDouble(firstOperand)));
+            lblDisplay.Text =result.ToString("N"+remainlengt) ;
         }
     }
 }
