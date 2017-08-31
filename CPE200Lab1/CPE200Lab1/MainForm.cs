@@ -81,7 +81,7 @@ namespace CPE200Lab1
             if (isTwotime)
             {
                 string secondOperand = lblDisplay.Text;
-                string result = engine.Calculate(operate, firstOperand, lblDisplay.Text);
+                string result = engine.Calculate(operate, firstOperand, secondOperand);
                 if (((Button)sender).Text == "%")
                 {
                     operate2 = ((Button)sender).Text;
@@ -92,8 +92,8 @@ namespace CPE200Lab1
                 }
                 if (operate2 == "%")
                 {
-                    secondOperand = engine.Calculate(operate2, firstOperand, lblDisplay.Text);
-                    result = engine.Calculate(operate, firstOperand, lblDisplay.Text);
+                    secondOperand = engine.Calculate(operate2, firstOperand,secondOperand);
+                    result = engine.Calculate(operate, firstOperand, secondOperand);
                     lblDisplay.Text = lblDisplay.Text;
                 }
                 if (operate2 != "%")
@@ -246,10 +246,14 @@ namespace CPE200Lab1
 
         private void btn1divideX_Click(object sender, EventArgs e)
         {
-            
-            int remainlengt=6;
+            int maxout = 8;
+            int remainlengt;
+            string[] part;
             firstOperand = lblDisplay.Text;
             double result = (1 / (Convert.ToDouble(firstOperand)));
+            part = result.ToString().Split('.');
+            
+            remainlengt = maxout - part[0].Length - 1;
             lblDisplay.Text =result.ToString("N"+remainlengt) ;
         }
     }
