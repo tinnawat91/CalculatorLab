@@ -16,10 +16,9 @@ namespace CPE200Lab1
         private bool isAllowBack;
         private bool isAfterOperater;
         private bool isAfterEqual;
-        private bool isTwotime;
         private string firstOperand;
         private string operate;
-        private string operate2;
+        private double memory;
         private CalculatorEngine engine;
 
         private void resetAll()
@@ -29,12 +28,15 @@ namespace CPE200Lab1
             hasDot = false;
             isAfterOperater = false;
             isAfterEqual = false;
-            isTwotime = false;
+            firstOperand = null;
         }
-        
+
+      
+
         public MainForm()
         {
             InitializeComponent();
+            memory = 0;
             engine = new CalculatorEngine();
             resetAll();
         }
@@ -49,11 +51,10 @@ namespace CPE200Lab1
             {
                 resetAll();
             }
-            if (isAfterOperater&&isTwotime)
+            if (isAfterOperater)
             {
                 lblDisplay.Text = "0";
             }
-            
             if(lblDisplay.Text.Length is 8)
             {
                 return;
@@ -68,6 +69,30 @@ namespace CPE200Lab1
             isAfterOperater = false;
         }
 
+        private void btnUnaryOperator_Click(object sender, EventArgs e)
+        {
+            if (lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            if (isAfterOperater)
+            {
+                return;
+            }
+            operate = ((Button)sender).Text;
+            firstOperand = lblDisplay.Text;
+            string result = engine.unaryCalculate(operate, firstOperand);
+            if (result is "E" || result.Length > 8)
+            {
+                lblDisplay.Text = "Error";
+            }
+            else
+            {
+                lblDisplay.Text = result;
+            }
+
+        }
+
         private void btnOperator_Click(object sender, EventArgs e)
         {
             if (lblDisplay.Text is "Error")
@@ -78,35 +103,20 @@ namespace CPE200Lab1
             {
                 return;
             }
-            if (isTwotime)
+            if(firstOperand != null)
             {
                 string secondOperand = lblDisplay.Text;
-                string result = engine.Calculate(operate, firstOperand, secondOperand);
-                if (((Button)sender).Text == "%")
+                string result = engine.calculate(operate, firstOperand, secondOperand);
+                if (result is "E" || result.Length > 8)
                 {
-                    operate2 = ((Button)sender).Text;
+                    lblDisplay.Text = "Error";
                 }
                 else
                 {
-                    operate = ((Button)sender).Text;
+                    lblDisplay.Text = result;
                 }
-                if (operate2 == "%")
-                {
-                    secondOperand = engine.Calculate(operate2, firstOperand,secondOperand);
-                    result = engine.Calculate(operate, firstOperand, secondOperand);
-                    lblDisplay.Text = lblDisplay.Text;
-                }
-                if (operate2 != "%")
-                {
-                    firstOperand = result;
-                }
-                lblDisplay.Text = result;
-                
-                isAfterOperater = true;
-                return;
             }
             operate = ((Button)sender).Text;
-            
             switch (operate)
             {
                 case "+":
@@ -117,16 +127,10 @@ namespace CPE200Lab1
                     isAfterOperater = true;
                     break;
                 case "%":
-                    /// your code here
+                    // your code here
                     break;
             }
             isAllowBack = false;
-            isTwotime = true;
-        }
-
-        private string Sqrt(string firstOperand)
-        {
-            throw new NotImplementedException();
         }
 
         private void btnEqual_Click(object sender, EventArgs e)
@@ -136,7 +140,7 @@ namespace CPE200Lab1
                 return;
             }
             string secondOperand = lblDisplay.Text;
-            string result = engine.Calculate(operate, firstOperand, secondOperand);
+            string result = engine.calculate(operate, firstOperand, secondOperand);
             if (result is "E" || result.Length > 8)
             {
                 lblDisplay.Text = "Error";
@@ -146,7 +150,6 @@ namespace CPE200Lab1
                 lblDisplay.Text = result;
             }
             isAfterEqual = true;
-            isTwotime = false;
         }
 
         private void btnDot_Click(object sender, EventArgs e)
@@ -229,40 +232,38 @@ namespace CPE200Lab1
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void btnMP_Click(object sender, EventArgs e)
         {
-
+            if(lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            memory += Convert.ToDouble(lblDisplay.Text);
+            isAfterOperater = true;
         }
 
-        private void lblDisplay_Click(object sender, EventArgs e)
+        private void btnMC_Click(object sender, EventArgs e)
         {
-
+            memory = 0;
         }
 
-        private void btn1divideX_Click(object sender, EventArgs e)
+        private void btnMM_Click(object sender, EventArgs e)
         {
-            int maxout = 8;
-            int remainlengt;
-            string[] part;
-            firstOperand = lblDisplay.Text;
-            double result = (1 / (Convert.ToDouble(firstOperand)));
-            part = result.ToString().Split('.');
-            
-            remainlengt = maxout - part[0].Length - 1;
-            lblDisplay.Text =result.ToString("N"+remainlengt) ;
+            if(lblDisplay.Text is "Error")
+            {
+                return;
+            }
+            memory -= Convert.ToDouble(lblDisplay.Text);
+            isAfterOperater = true;
         }
 
-        private void btnsquare_Click(object sender, EventArgs e)
+        private void btnMR_Click(object sender, EventArgs e)
         {
-            int maxout = 8;
-            int remainlengt;
-            string[] part;
-            firstOperand = lblDisplay.Text;
-            double result = Math.Sqrt(Convert.ToDouble(firstOperand));
-            part = result.ToString().Split('.');
-
-            remainlengt = maxout - part[0].Length - 1;
-            lblDisplay.Text = result.ToString("N" + remainlengt);
+            if(lblDisplay.Text is "error")
+            {
+                return;
+            }
+            lblDisplay.Text = memory.ToString();
         }
     }
 }
