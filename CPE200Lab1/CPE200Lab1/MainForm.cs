@@ -254,11 +254,15 @@ namespace CPE200Lab1
 
         private void btnsquare_Click(object sender, EventArgs e)
         {
-            double num;
+            int maxout = 8;
+            int remainlengt;
+            string[] part;
             firstOperand = lblDisplay.Text;
-            num = Convert.ToDouble(firstOperand);
-            double result = Math.Sqrt(num);
-            lblDisplay.Text = Convert.ToString(result);
+            double result = Math.Sqrt(Convert.ToDouble(firstOperand));
+            part = result.ToString().Split('.');
+
+            remainlengt = maxout - part[0].Length - 1;
+            lblDisplay.Text = result.ToString("N" + remainlengt);
         }
     }
 }
