@@ -18,6 +18,7 @@ namespace CPE200Lab1
         private bool isAfterEqual;
         private string firstOperand;
         private string operate;
+        private string operate2;
         private double memory;
         private CalculatorEngine engine;
 
@@ -43,6 +44,7 @@ namespace CPE200Lab1
 
         private void btnNumber_Click(object sender, EventArgs e)
         {
+            hasDot = false;
             if (lblDisplay.Text is "Error")
             {
                 return;
@@ -103,20 +105,35 @@ namespace CPE200Lab1
             {
                 return;
             }
-            if(firstOperand != null)
+            
+            if (firstOperand != null)
             {
                 string secondOperand = lblDisplay.Text;
+                if (operate2 != null)
+                {
+                    secondOperand = engine.calculate(operate2, firstOperand, secondOperand);
+                    lblDisplay.Text = secondOperand;
+                    return;
+                }
                 string result = engine.calculate(operate, firstOperand, secondOperand);
                 if (result is "E" || result.Length > 8)
                 {
                     lblDisplay.Text = "Error";
                 }
-                else
+                else 
                 {
                     lblDisplay.Text = result;
                 }
             }
-            operate = ((Button)sender).Text;
+            if (((Button)sender).Text == "%")
+            {
+                operate2 = ((Button)sender).Text;
+            }
+            else
+            {
+                operate = ((Button)sender).Text;
+            }
+
             switch (operate)
             {
                 case "+":
@@ -141,6 +158,10 @@ namespace CPE200Lab1
             }
             string secondOperand = lblDisplay.Text;
             string result = engine.calculate(operate, firstOperand, secondOperand);
+            if (!isAfterEqual)
+            {
+                firstOperand = secondOperand;
+            }
             if (result is "E" || result.Length > 8)
             {
                 lblDisplay.Text = "Error";
