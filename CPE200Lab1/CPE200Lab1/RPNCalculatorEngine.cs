@@ -11,6 +11,10 @@ namespace CPE200Lab1
         public new string Process(string str)
         {
             Stack<string> rpnStack = new Stack<string>();
+            if(str is null||str=="")
+            {
+                return "E";
+            }
             List<string> parts = str.Split(' ').ToList<string>();
             string result;
             string firstOperand, secondOperand;
