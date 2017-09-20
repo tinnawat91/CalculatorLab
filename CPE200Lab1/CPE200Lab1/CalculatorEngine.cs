@@ -133,8 +133,11 @@ namespace CPE200Lab1
                             return result.ToString();
                         }
                         parts2 = parts[1].Split('0');
-                        remainLength = parts2.Length;
-                        
+                        remainLength = parts2[0].Length;
+                        if (parts2[0].Length > 4)
+                        {
+                            remainLength = 4;
+                        }
                         return result.ToString("N" + remainLength);
                     }
                     break;
