@@ -63,11 +63,16 @@ namespace CPE200Lab1
             isNumberPart = false;
             isContainDot = false;
             string current = lblDisplay.Text;
-            if (current[current.Length - 1] != ' ' || isOperator(current[current.Length - 2]))
+            if (current=="0")
             {
-                lblDisplay.Text += " " + ((Button)sender).Text + " ";
-                isSpaceAllowed = false;
+                lblDisplay.Text = ((Button)sender).Text;
             }
+            else 
+            {
+                lblDisplay.Text +=((Button)sender).Text;
+                
+            }
+            isSpaceAllowed = true;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
